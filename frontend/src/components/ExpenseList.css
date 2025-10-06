@@ -1,0 +1,45 @@
+.expense-section {
+  margin-top: 40px;
+}
+
+.expense-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.expense-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.expense-count {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.expense-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .expense-section {
+    margin-top: 24px;
+  }
+
+  .expense-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .expense-title {
+    font-size: 18px;
+  }
+}
+
+

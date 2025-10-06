@@ -1,0 +1,96 @@
+.expense-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  gap: 16px;
+}
+
+.expense-item:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-color: #4F46E5;
+}
+
+.expense-merchant {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 500;
+  color: #111827;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.expense-amount {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  min-width: 80px;
+  text-align: right;
+}
+
+.expense-date {
+  font-size: 14px;
+  color: #6B7280;
+  min-width: 120px;
+  text-align: right;
+}
+
+.expense-delete {
+  background: none;
+  border: none;
+  color: #6B7280;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.expense-delete:hover {
+  color: #EF4444;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  .expense-item {
+    flex-wrap: wrap;
+    padding: 16px;
+  }
+
+  .expense-merchant {
+    flex: 1 1 70%;
+    font-size: 15px;
+  }
+
+  .expense-delete {
+    flex: 0 0 auto;
+    order: 2;
+  }
+
+  .expense-amount {
+    flex: 1 1 100%;
+    order: 3;
+    text-align: left;
+    font-size: 18px;
+    margin-top: 8px;
+    min-width: auto;
+  }
+
+  .expense-date {
+    flex: 1 1 100%;
+    order: 4;
+    text-align: left;
+    font-size: 13px;
+    margin-top: 4px;
+    min-width: auto;
+  }
+}
+
+

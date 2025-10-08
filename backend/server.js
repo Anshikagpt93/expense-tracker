@@ -8,9 +8,17 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000'
-}));
+// Configure CORS based on environment
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || (
+    process.env.NODE_ENV === 'production' 
+      ? true  // Allow same-origin requests in production
+      : 'http://localhost:3000'  // Allow React dev server in development
+  ),
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
@@ -90,7 +98,11 @@ app.listen(PORT, () => {
   console.log(`📍 Port: ${PORT}`);
   console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔑 OpenAI API Key: ${process.env.OPENAI_API_KEY ? 'Configured ✅' : 'Missing ❌'}`);
-  console.log(`🌐 CORS Origin: ${process.env.CORS_ORIGIN || 'http://localhost:3000'}`);
+  
+  const corsOrigin = process.env.CORS_ORIGIN || (
+    process.env.NODE_ENV === 'production' ? 'same-origin' : 'http://localhost:3000'
+  );
+  console.log(`🌐 CORS Origin: ${corsOrigin}`);
   
   const buildPath = path.join(__dirname, '../frontend/build');
   const fs = require('fs');

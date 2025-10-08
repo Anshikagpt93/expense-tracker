@@ -1,4 +1,8 @@
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
+// Determine API URL based on environment
+// In production, use same origin (Railway serves both frontend and backend)
+// In development, use localhost:3001
+const API_URL = process.env.REACT_APP_API_URL || 
+  (window.location.hostname === 'localhost' ? 'http://localhost:3001' : '');
 
 /**
  * Extract receipt data from image

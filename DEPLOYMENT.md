@@ -34,9 +34,14 @@ git push -u origin main
 
 In the Railway dashboard, go to Variables tab and add:
 
+**Required Variables:**
 ```
 OPENAI_API_KEY=sk-proj-your-actual-key-here
 NODE_ENV=production
+```
+
+**Optional Variables:**
+```
 PORT=3001
 CORS_ORIGIN=*
 MAX_FILE_SIZE=5242880
@@ -44,7 +49,10 @@ MAX_FILE_SIZE=5242880
 
 **⚠️ CRITICAL:** The `NODE_ENV=production` variable is **REQUIRED** for the frontend to be served. Without it, you will see "Cannot GET /" error.
 
-**Note:** Railway automatically sets the `PORT` variable, but we specify 3001 as backup.
+**Notes:**
+- Railway automatically sets the `PORT` variable, but we specify 3001 as backup
+- `CORS_ORIGIN` is optional - defaults to same-origin in production
+- `MAX_FILE_SIZE` defaults to 10MB if not set
 
 ### 4. Configure Build Settings
 
@@ -129,8 +137,16 @@ curl https://your-app.railway.app/api/health
 - Ensure PORT variable is set
 
 **CORS errors in browser**
-- Update `CORS_ORIGIN` to match your domain
-- Or set to `*` to allow all origins (development only)
+- First, ensure `NODE_ENV=production` is set in Railway
+- The app automatically handles CORS for same-origin requests in production
+- If you still have CORS issues, set `CORS_ORIGIN=*` in Railway variables
+- For custom domains, set `CORS_ORIGIN` to your specific domain
+
+**API calls failing (ERR_CONNECTION_REFUSED, localhost:3001)**
+- This means the frontend is trying to call localhost instead of Railway
+- Solution: The recent update auto-detects production vs development
+- Make sure you've deployed the latest code with the API URL fix
+- Clear browser cache and hard refresh (Cmd+Shift+R or Ctrl+Shift+F5)
 
 **Receipt processing fails**
 - Verify OpenAI API key is valid

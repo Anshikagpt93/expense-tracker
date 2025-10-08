@@ -4,6 +4,13 @@
 const API_URL = process.env.REACT_APP_API_URL || 
   (window.location.hostname === 'localhost' ? 'http://localhost:3001' : '');
 
+// Debug logging
+console.log('🔧 API Configuration:', {
+  hostname: window.location.hostname,
+  API_URL: API_URL || '(same-origin)',
+  env: process.env.REACT_APP_API_URL || 'not set'
+});
+
 /**
  * Extract receipt data from image
  * @param {File} imageFile - The receipt image file
@@ -13,18 +20,23 @@ export async function extractReceipt(imageFile) {
   const formData = new FormData();
   formData.append('image', imageFile);
 
+  const fullURL = `${API_URL}/api/extract`;
+  console.log('🚀 Making request to:', fullURL);
+
   try {
     // Create an AbortController for timeout
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 90000); // 90 second timeout
 
-    const response = await fetch(`${API_URL}/api/extract`, {
+    const response = await fetch(fullURL, {
       method: 'POST',
       body: formData,
       signal: controller.signal
     });
 
     clearTimeout(timeoutId);
+
+    console.log('✅ Response status:', response.status);
 
     const data = await response.json();
 
@@ -37,7 +49,8 @@ export async function extractReceipt(imageFile) {
     if (error.name === 'AbortError') {
       throw new Error('Request timed out. The file might be too large or the server is busy.');
     }
-    console.error('API Error:', error);
+    console.error('❌ API Error:', error);
+    console.error('Failed URL:', fullURL);
     throw error;
   }
 }

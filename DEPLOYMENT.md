@@ -42,7 +42,9 @@ CORS_ORIGIN=*
 MAX_FILE_SIZE=5242880
 ```
 
-**Important:** Railway automatically sets the `PORT` variable, but we specify 3001 as backup.
+**⚠️ CRITICAL:** The `NODE_ENV=production` variable is **REQUIRED** for the frontend to be served. Without it, you will see "Cannot GET /" error.
+
+**Note:** Railway automatically sets the `PORT` variable, but we specify 3001 as backup.
 
 ### 4. Configure Build Settings
 
@@ -93,6 +95,23 @@ curl https://your-app.railway.app/api/health
 ```
 
 ## Troubleshooting
+
+### "Cannot GET /" Error
+
+**Symptom:** Railway deployment succeeds but shows "Cannot GET /" when you visit the URL
+
+**Most Common Cause:** `NODE_ENV` is not set to `production` in Railway
+
+**Solution:**
+1. Go to Railway dashboard → Your project → Variables tab
+2. Add variable: `NODE_ENV` = `production`
+3. The app will automatically redeploy
+4. Wait 2-3 minutes for deployment to complete
+5. Refresh your browser
+
+**Alternative Causes:**
+- Frontend build failed (check Railway build logs)
+- Build folder wasn't created (verify build command includes `npm run build`)
 
 ### Build Fails
 
